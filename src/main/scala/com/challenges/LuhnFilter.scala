@@ -9,10 +9,10 @@ import collection.mutable.ListBuffer
 object LuhnFilter{
   
   def apply(input: String): String = {
-    val seq = input.map(c => LogElement(c))
+    val seq: IndexedSeq[LogElement] = input.map(c => LogElement(c))
     val windows = Seq(new Window(16), new Window(15), new Window(14))
-    for (lc <- seq) {
-      if (validate(lc)) windows.foreach(_.prepend(lc)) 
+    for (logElement <- seq) {
+      if (validate(logElement)) windows.foreach(_.prepend(logElement)) 
       else windows.foreach(_.clear)
     }
     val result = seq.map(_.element).mkString
@@ -23,6 +23,7 @@ object LuhnFilter{
   private def validate(e: LogElement): Boolean = {
     e.element == ' ' || e.element == '-' || e.element.isDigit
   }
+ 
 }
 
 /**
@@ -36,7 +37,7 @@ object LuhnFilter{
  */
 class Window(val size: Int) {
     val window : ListBuffer[LogElement] = ListBuffer()
-
+    
     def prepend(log: LogElement) {
       if(!log.element.isDigit) return
       
@@ -55,13 +56,11 @@ class Window(val size: Int) {
      * This method is the key part of the algorithm to find overlapping credit card numbers.
      * We "iterate" over the window and apply the Luhn algorithm.
      * 
-     * If it contains valid credit card data, then we will mark it with an X. 
-     * (Once the element is marked to be X'd, it will not be changed.)
-     * 
      */
     private def containsValidCreditCardNumbers = {
-      val res = window.map(_.elementAsInteger).mkString
-      isFull && LuhnChecker.isValid(res.reverse)
+      val res = window.map(_.elementAsInteger).reverse.mkString
+      isFull && LuhnChecker.isValid(res)
     }
+    
     
   }
