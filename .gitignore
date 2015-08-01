@@ -11,7 +11,12 @@ lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
+project/.sbtserver
+project/.sbtserver.lock
 
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
+/bin/
+.classpath
+.cache-main
