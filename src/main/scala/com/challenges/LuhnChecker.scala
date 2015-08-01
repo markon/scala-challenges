@@ -14,7 +14,7 @@ object LuhnChecker {
    * Return true if the credit card number is valid, false otherwise.
    */
   def isValid(number: String): Boolean = { 
-    //assume((number.length >= 14) && (number.length <= 16), "CC number must be between 14/16 digits.")
+    require((number.length >= 14) && (number.length <= 16), "CC number must be between 14/16 digits.")
     
     def sumDigits(x: Integer): Int = {
       x.toString.map(_.asDigit).sum
