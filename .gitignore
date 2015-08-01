@@ -20,3 +20,5 @@ project/.sbtserver.lock
 /bin/
 .classpath
 .cache-main
+.project
+.cache-tests
