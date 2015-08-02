@@ -3,8 +3,6 @@ package com.challenges
 /** LuhnChecker is an object with methods that apply the Luhn algorithm to determine 
  *  whether a given string is a valid credit card number or not.
  * 
- * This object is not used in the code base, but it gives a better understanding of how the Luhn algorithm works.
- * 
  */
 object LuhnChecker {
   
