@@ -6,9 +6,10 @@ import collection.mutable.ListBuffer
  * The LuhnFilter applies the Luhn algorithm to a string of arbitrary length, in order to find multiple 
  * and overlapping credit card numbers.
  * 
- * It creates three different Window objects, and adds to each of them small "containers" with digits belonging to 
- * the analyzed string. These containers contain the original element, an integral representation of them and
- * the final character that will be used for the representation of the string. 
+ * It keeps track (via a sequence) of every character in the string and transforms each of them into a more complex object (LogElement) 
+ * to handle better non-digit characters.
+ * Then, it creates three different Window objects, and adds to each of them only those LogElements with digits.
+ * These sequences share LogElements, so it's easier to mark (cc numbers) and filter elements (non digits).
  * When adding, each Window is checking whether the Window is full or not: 
  * in that case, tries to apply the Luhn algorithm to check that the digits look like a credit-card number.
  */
