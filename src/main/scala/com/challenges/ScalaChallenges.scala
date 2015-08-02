@@ -1,8 +1,5 @@
 package com.challenges
 
-import collection.immutable.IndexedSeq
-import collection.mutable.ListBuffer
-
 object ScalaChallenges {
   
   val creditCardNumbers = List(
