@@ -2,11 +2,15 @@ package com.challenges
 
 import collection.mutable.ListBuffer
 
-
-
 /**
  * The LuhnFilter applies the Luhn algorithm to a string of arbitrary length, in order to find multiple 
  * and overlapping credit card numbers.
+ * 
+ * It creates three different Window objects, and adds to each of them small "containers" with digits belonging to 
+ * the analyzed string. These containers contain the original element, an integral representation of them and
+ * the final character that will be used for the representation of the string. 
+ * When adding, each Window is checking whether the Window is full or not: 
+ * in that case, tries to apply the Luhn algorithm to check that the digits look like a credit-card number.
  */
 object LuhnFilter{
   
@@ -61,6 +65,4 @@ class Window(val size: Int) {
       val res = window.map(_.origAsInteger).reverse.mkString
       isFull && LuhnChecker.isValid(res)
     }
-    
-    
   }
