@@ -2,6 +2,8 @@ package com.challenges
 
 import collection.mutable.ListBuffer
 
+
+
 /**
  * The LuhnFilter applies the Luhn algorithm to a string of arbitrary length, in order to find multiple 
  * and overlapping credit card numbers.
@@ -9,15 +11,13 @@ import collection.mutable.ListBuffer
 object LuhnFilter{
   
   def apply(input: String): String = {
-    val seq: IndexedSeq[LogElement] = input.map(c => LogElement(c))
+    val seq = input.map(c => LogElement(c))
     val windows = Seq(new Window(16), new Window(15), new Window(14))
     for (logElement <- seq) {
       if (validate(logElement)) windows.foreach(_.prepend(logElement)) 
       else windows.foreach(_.clear)
     }
-    val result = seq.map(_.element).mkString
-    println(result)
-    result
+    seq.map(_.element).mkString
   }
   
   private def validate(e: LogElement): Boolean = {
@@ -39,7 +39,7 @@ class Window(val size: Int) {
     val window : ListBuffer[LogElement] = ListBuffer()
     
     def prepend(log: LogElement) {
-      if(!log.element.isDigit) return
+      if(!log.c.isDigit) return
       
       if (isFull)
         window.remove(size - 1)
@@ -51,14 +51,14 @@ class Window(val size: Int) {
 
     def clear { window.clear() }
     def isFull = window.size == size
-
+ 
     /**
      * This method is the key part of the algorithm to find overlapping credit card numbers.
-     * We "iterate" over the window and apply the Luhn algorithm.
+     * We "iterate" over the full window and apply the Luhn algorithm.
      * 
      */
     private def containsValidCreditCardNumbers = {
-      val res = window.map(_.elementAsInteger).reverse.mkString
+      val res = window.map(_.origAsInteger).reverse.mkString
       isFull && LuhnChecker.isValid(res)
     }
     
